@@ -1,6 +1,8 @@
 TykeScript
 --------
 
+Still in early stages of getting some good keywords together!
+
 aye     : true
 
 nay     : false
@@ -24,8 +26,24 @@ Hello, World!
 ---------
 
 ``` 
-ey up helloWorld wa' "Hello, World!"
+ey up helloWorld wa' "Now Then, World!"
 blether on helloWorld
+```
+
+Assignment
+-------
+
+```
+ey up counter wa' 1
+```
+
+Function Declaration
+-----
+
+```
+now then sum
+	wi x y
+	x an' y
 ```
 
 Comparison
