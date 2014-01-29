@@ -2,9 +2,13 @@ TykeScript
 --------
 
 aye     : true
+
 nay     : false
+
 nowt    : null
+
 owt     : any
+
 mi'sen  : this
 
 blether: print line
