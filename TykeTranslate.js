@@ -18,6 +18,7 @@ TykeTranslate.prototype._parseExpr = function(expr){
 			output.symbol = expr.symbol === 'aye';
 			break;
 		case 'number':
+		case 'label':
 			output.symbol = expr.symbol;
 			break;
 		case 'bool_compare':
@@ -31,6 +32,10 @@ TykeTranslate.prototype._parseExpr = function(expr){
 			break;
 		case 'statement':
 			output.statement = this._parseExpr(expr.statement);
+			break;
+		case 'function':
+			output.label = this._parseExpr(expr.label);
+			output.statements = expr.statements.map(function(statement){return this._parseExpr(statement)}.bind(this));
 			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);

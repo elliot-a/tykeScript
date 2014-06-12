@@ -12,8 +12,10 @@
 "in't"                          return 'isnt'
 "is"                            return 'is'
 "eyup"                          return 'VAR'
-[A-Za-z][A-Za-z_0-9-]*          return 'LABEL'
 "="                             return 'EQ' // todo : switch assignment operator
+"nowthen"                       return 'nowthen'
+"tara"                          return 'tara'
+[A-Za-z][A-Za-z_0-9-]*          return 'NAME'
 <<EOF>>                         return 'EOF'
 
 /lex
@@ -23,7 +25,7 @@
 %%
 
 document
-    : SOURCE EOF {return yy}
+    : SOURCE EOF {yy.add($1); return yy}
     ;
 
 SOURCE
@@ -32,13 +34,14 @@ SOURCE
     ;
 
 STATEMENTS
-    : STATEMENT { yy.add_statement($1)}
-    | STATEMENTS NEWLINE STATEMENT {yy.add_statement($3)}
+    : STATEMENT { $$ = yy.statement($1)}
+    | STATEMENTS NEWLINE STATEMENT {$$ = yy.add_statement($1, $3)}
     ;
 
 STATEMENT
     : ASSIGNMENT
-    | EXPR 
+    | EXPR
+    | FUNCTION
     ;
 
 
@@ -47,10 +50,17 @@ ASSIGNMENT
         {$$ = yy.assignment($2, $4)}
     ;
 
+FUNCTION
+    : nowthen LABEL NEWLINE STATEMENTS NEWLINE tara
+        {$$ = yy.function($2, $4)}
+    ;
+
 EXPR
     : BOOL
     | NUM
     | BOOL COMPARISON BOOL
+        {$$ = yy.bool_compare($1, $2, $3)}
+    | LABEL COMPARISON LABEL
         {$$ = yy.bool_compare($1, $2, $3)}
     ;
 
@@ -78,6 +88,7 @@ COMPARISON
     ;
 
 NUM : NUMBER {$$ = yy.number_literal($1)};
+LABEL : NAME {$$ = yy.label($1)};
 
 
 %%

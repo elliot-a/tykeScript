@@ -9,7 +9,7 @@ TykeGenerate.prototype.generate = function(){
 		return this._parseExpr(statement);
 	}.bind(this));
 
-	return statements.join(';\n');
+	return statements.join(';\n') + ';';
 };
 
 TykeGenerate.prototype._parseExpr = function(expr){
@@ -17,6 +17,7 @@ TykeGenerate.prototype._parseExpr = function(expr){
 	switch(expr.type){
 		case 'bool':
 		case 'number':
+		case 'label':
 			output.push(expr.symbol);
 			break;
 		case 'bool_compare':
@@ -26,12 +27,26 @@ TykeGenerate.prototype._parseExpr = function(expr){
 			break;
 		case 'assignment':
 			output.push('var');
-			output.push(expr.label);
+			output.push(this._parseExpr(expr.label));
 			output.push('=');
 			output.push(this._parseExpr(expr.expr));
 			break;
 		case 'statement':
 			output.push(this._parseExpr(expr.statement));
+			break;
+		case 'function':
+			output.push('function');
+			output.push(this._parseExpr(expr.label));
+			output.push('()')
+			output.push('{')
+			
+			{
+				let statements = expr.statements.map(function(statement){
+						return this._parseExpr(statement)
+				}.bind(this));
+				output.push(statements.join(';\n') + ';');
+			}
+			output.push('}')
 			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);

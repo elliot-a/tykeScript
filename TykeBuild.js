@@ -2,6 +2,10 @@ var TykeBuild = function(){
 	this.tree = [];
 };
 
+TykeBuild.prototype.add = function(tree) {
+	this.tree = this.tree.concat(tree);
+};
+
 
 TykeBuild.prototype.getTree = function(){
 	return this.tree;
@@ -25,12 +29,25 @@ TykeBuild.prototype.number_literal = function(symbol){
 	return {type:'number', symbol:symbol};
 };
 
+TykeBuild.prototype.label = function(symbol){
+	return {type:'label', symbol:symbol};
+};
+
+TykeBuild.prototype.function = function(label, statements){
+	return {type:'function', label:label, statements:statements};
+};
+
 TykeBuild.prototype.assignment = function(label, expr){
 	return {type:'assignment', label:label, expr:expr};
 };
 
-TykeBuild.prototype.add_statement = function(statement){
-	this.tree.push( {type:'statement', statement:statement});
+
+TykeBuild.prototype.statement = function(statement){
+	return [{type:'statement', statement:statement}];
+};
+
+TykeBuild.prototype.add_statement = function(statements, statement){
+	return statements.concat(this.statement(statement));
 };
 
 
