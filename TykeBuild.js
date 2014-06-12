@@ -35,8 +35,17 @@ TykeBuild.prototype.label = function(symbol){
 	return {type:'label', symbol:symbol};
 };
 
-TykeBuild.prototype.function = function(label, statements){
-	return {type:'function', label:label, statements:statements};
+TykeBuild.prototype.labels = function(label){
+	return {type: 'label_list', labels:[label]};
+};
+
+TykeBuild.prototype.add_label = function(label_list, label){
+	label_list.labels.push(label);
+};
+
+TykeBuild.prototype.function = function(label, statements, _args){
+	var args = _args || {type: 'label_list', labels:[]};
+	return {type:'function', label:label, statements:statements, arguments:args};
 };
 
 TykeBuild.prototype.function_call = function(label){

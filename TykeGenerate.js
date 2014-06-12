@@ -20,6 +20,14 @@ TykeGenerate.prototype._parseExpr = function(expr){
 		case 'label':
 			output.push(expr.symbol);
 			break;
+		case 'label_list':
+			{
+				let list = expr.labels.map(function(label){
+					return this._parseExpr(label);
+				}.bind(this)).join(', ');
+				output.push(list);
+			}
+			break;
 		case 'bool_compare':
 			output.push(this._parseExpr(expr.left));
 			output.push(expr.comparison);
@@ -36,7 +44,11 @@ TykeGenerate.prototype._parseExpr = function(expr){
 			break;
 		case 'function':
 			output.push('function');
-			output.push(this._parseExpr(expr.label) + '()');
+			{
+				let name = this._parseExpr(expr.label);
+				let parens = '(' + this._parseExpr(expr.arguments) + ')';
+				output.push(name + parens);
+			}
 			output.push('{')
 			
 			{

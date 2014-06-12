@@ -21,6 +21,11 @@ TykeTranslate.prototype._parseExpr = function(expr){
 		case 'label':
 			output.symbol = expr.symbol;
 			break;
+		case 'label_list':
+			output.labels = expr.labels.map(function(label){
+				return this._parseExpr(label);
+			}.bind(this));
+			break;
 		case 'bool_compare':
 			output.left = this._parseExpr(expr.left);
 			output.right = this._parseExpr(expr.right);
@@ -36,6 +41,7 @@ TykeTranslate.prototype._parseExpr = function(expr){
 		case 'function':
 			output.label = this._parseExpr(expr.label);
 			output.statements = expr.statements.map(function(statement){return this._parseExpr(statement)}.bind(this));
+			output.arguments = this._parseExpr(expr.arguments);
 			break;
 		case 'function_call':
 			output.label = this._parseExpr(expr.label);

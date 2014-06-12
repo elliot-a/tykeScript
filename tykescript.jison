@@ -16,6 +16,7 @@
 "nowthen"                       return 'nowthen'
 "tara"                          return 'tara'
 "do"                            return 'do'
+"wi"                            return 'wi'
 [A-Za-z][A-Za-z_0-9-]*          return 'NAME'
 <<EOF>>                         return 'EOF'
 
@@ -55,6 +56,8 @@ ASSIGNMENT
 FUNCTION
     : nowthen LABEL NEWLINE STATEMENTS NEWLINE tara
         {$$ = yy.function($2, $4)}
+    | nowthen LABEL NEWLINE wi LABELS NEWLINE STATEMENTS NEWLINE tara
+        {$$ = yy.function($2, $7, $5)}
     ;
 
 FUNC_CALL
@@ -95,6 +98,11 @@ COMPARISON
 NEWLINES
     : NEWLINE
     | NEWLINES NEWLINE
+    ;
+
+LABELS
+    : LABEL {$$ = yy.labels($1)}
+    | LABELS LABEL {yy.add_label($1, $2)}
     ;
 
 NUM : NUMBER {$$ = yy.number_literal($1)};

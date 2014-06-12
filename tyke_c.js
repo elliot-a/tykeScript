@@ -15,13 +15,13 @@ var tBuild = new TykeBuild();
 
 parser.yy = tBuild;
 
-try{
+// try{
 	var parsed = parser.parse(source);
-}catch(e){
- 	console.log('Ey Up!');
- 	console.log(e.message);
- 	process.exit();
-}
+// }catch(e){
+//  	console.log('Ey Up!');
+//  	console.log(e.message);
+//  	process.exit();
+// }
 
 var tree = parsed.getTree();
 var translator = new TykeTranslate(tree);

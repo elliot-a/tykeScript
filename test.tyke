@@ -6,3 +6,8 @@ nowthen ben
 	tara
 
 do ben
+
+nowthen func
+	wi x y
+	x is y
+	tara
