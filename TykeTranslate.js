@@ -37,6 +37,9 @@ TykeTranslate.prototype._parseExpr = function(expr){
 			output.label = this._parseExpr(expr.label);
 			output.statements = expr.statements.map(function(statement){return this._parseExpr(statement)}.bind(this));
 			break;
+		case 'function_call':
+			output.label = this._parseExpr(expr.label);
+			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);
 			break;

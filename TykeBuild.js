@@ -1,4 +1,6 @@
-var TykeBuild = function(){
+'use strict';
+
+const TykeBuild = function(){
 	this.tree = [];
 };
 
@@ -35,6 +37,10 @@ TykeBuild.prototype.label = function(symbol){
 
 TykeBuild.prototype.function = function(label, statements){
 	return {type:'function', label:label, statements:statements};
+};
+
+TykeBuild.prototype.function_call = function(label){
+	return {type:'function_call', label:label};
 };
 
 TykeBuild.prototype.assignment = function(label, expr){

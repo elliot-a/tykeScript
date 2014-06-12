@@ -15,6 +15,7 @@
 "="                             return 'EQ' // todo : switch assignment operator
 "nowthen"                       return 'nowthen'
 "tara"                          return 'tara'
+"do"                            return 'do'
 [A-Za-z][A-Za-z_0-9-]*          return 'NAME'
 <<EOF>>                         return 'EOF'
 
@@ -30,18 +31,19 @@ document
 
 SOURCE
     : STATEMENTS
-    | STATEMENTS NEWLINE
+    | STATEMENTS NEWLINES
     ;
 
 STATEMENTS
     : STATEMENT { $$ = yy.statement($1)}
-    | STATEMENTS NEWLINE STATEMENT {$$ = yy.add_statement($1, $3)}
+    | STATEMENTS NEWLINES STATEMENT {$$ = yy.add_statement($1, $3)}
     ;
 
 STATEMENT
     : ASSIGNMENT
     | EXPR
     | FUNCTION
+    | FUNC_CALL
     ;
 
 
@@ -54,6 +56,9 @@ FUNCTION
     : nowthen LABEL NEWLINE STATEMENTS NEWLINE tara
         {$$ = yy.function($2, $4)}
     ;
+
+FUNC_CALL
+    : do LABEL {$$ = yy.function_call($2)};
 
 EXPR
     : BOOL
@@ -85,6 +90,11 @@ COMPARISON
         {$$ = $1}
     | is
         {$$ = $1}
+    ;
+
+NEWLINES
+    : NEWLINE
+    | NEWLINES NEWLINE
     ;
 
 NUM : NUMBER {$$ = yy.number_literal($1)};

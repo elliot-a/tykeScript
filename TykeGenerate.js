@@ -36,8 +36,7 @@ TykeGenerate.prototype._parseExpr = function(expr){
 			break;
 		case 'function':
 			output.push('function');
-			output.push(this._parseExpr(expr.label));
-			output.push('()')
+			output.push(this._parseExpr(expr.label) + '()');
 			output.push('{')
 			
 			{
@@ -47,6 +46,9 @@ TykeGenerate.prototype._parseExpr = function(expr){
 				output.push(statements.join(';\n') + ';');
 			}
 			output.push('}')
+			break;
+		case 'function_call':
+			output.push(this._parseExpr(expr.label) + '()');
 			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);
