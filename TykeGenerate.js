@@ -20,6 +20,12 @@ TykeGenerate.prototype._parseExpr = function(expr){
 			output.push(expr.comparison);
 			output.push(this._parseExpr(expr.right));
 			break;
+		case 'assignment':
+			output.push('var');
+			output.push(expr.label);
+			output.push('=');
+			output.push(this._parseExpr(expr.expr));
+			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);
 			break;

@@ -3,14 +3,18 @@
 %lex
 
 %%
-\s+        				{/* skip whitespace */}
-[0-9]+         			return 'NUMBER'
-"+"         			return '+'
-"aye"                   return 'aye'
-"nay"                   return 'nay'
-"in't"                  return 'isnt'
-"is"                    return 'is'
-<<EOF>>               	return 'EOF'
+[\n\r]                          return 'NEWLINE'
+[^\n\S]+                        {/* skip whitespace except \n */}
+[0-9]+                          return 'NUMBER'
+"+"                             return '+'
+"aye"                           return 'aye'
+"nay"                           return 'nay'
+"in't"                          return 'isnt'
+"is"                            return 'is'
+"eyup"                          return 'VAR'
+[A-Za-z][A-Za-z_0-9-]*          return 'LABEL'
+"="                             return 'EQ' // todo : switch assignment operator
+<<EOF>>                         return 'EOF'
 
 /lex
 
@@ -19,11 +23,26 @@
 %%
 
 document
-    : SOURCE EOF {yy.add($1); return yy}
+    : SOURCE EOF {return yy}
     ;
 
 SOURCE
+    : STATEMENT (NEWLINE STATEMENT)* NEWLINE?
+    ;
+
+STATEMENT
+    : (ASSIGNMENT|EXPR) { yy.add_statement($1)}
+    ;
+
+
+ASSIGNMENT
+    : VAR LABEL EQ EXPR
+        {$$ = yy.assignment($2, $4)}
+    ;
+
+EXPR
     : BOOL
+    | NUM
     | BOOL COMPARISON BOOL
         {$$ = yy.bool_compare($1, $2, $3)}
     ;
@@ -52,5 +71,6 @@ COMPARISON
     ;
 
 NUM : NUMBER {$$ = yy.number_literal($1)};
+
 
 %%

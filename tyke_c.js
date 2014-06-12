@@ -21,6 +21,10 @@ try{
 }
 
 var tree = parsed.getTree();
+
+console.log(tree);
+
+process.exit();
 var translator = new TykeTranslate(tree);
 
 var jsTree = translator.translate();

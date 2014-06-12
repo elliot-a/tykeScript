@@ -74,36 +74,40 @@
 var tykescript = (function(){
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"document":3,"SOURCE":4,"EOF":5,"BOOL":6,"COMPARISON":7,"BOOL_LITERAL":8,"NUM":9,"aye":10,"nay":11,"isnt":12,"is":13,"NUMBER":14,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",10:"aye",11:"nay",12:"isnt",13:"is",14:"NUMBER"},
-productions_: [0,[3,2],[4,1],[4,3],[6,1],[6,3],[8,1],[8,1],[7,1],[7,1],[9,1]],
+symbols_: {"error":2,"document":3,"SOURCE":4,"EOF":5,"STATEMENT":6,"NEWLINE":7,"ASSIGNMENT":8,"EXPR":9,"VAR":10,"LABEL":11,"EQ":12,"BOOL":13,"NUM":14,"COMPARISON":15,"BOOL_LITERAL":16,"aye":17,"nay":18,"isnt":19,"is":20,"NUMBER":21,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"NEWLINE",10:"VAR",11:"LABEL",12:"EQ",17:"aye",18:"nay",19:"isnt",20:"is",21:"NUMBER"},
+productions_: [0,[3,2],[4,4],[6,1],[6,1],[8,4],[9,1],[9,1],[9,3],[13,1],[13,3],[16,1],[16,1],[15,1],[15,1],[14,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1:yy.add($$[$0-1]); return yy
+case 1:return yy
 break;
-case 3:this.$ = yy.bool_compare($$[$0-2], $$[$0-1], $$[$0])
+case 4: yy.add_statement($$[$0])
 break;
-case 4:this.$ = yy.bool_literal($$[$0])
+case 5:this.$ = yy.assignment($$[$0-2], $$[$0])
 break;
-case 5:this.$ = yy.bool_compare($$[$0-2], $$[$0-1], $$[$0])
+case 8:this.$ = yy.bool_compare($$[$0-2], $$[$0-1], $$[$0])
 break;
-case 6:this.$ = $$[$0]
+case 9:this.$ = yy.bool_literal($$[$0])
 break;
-case 7:this.$ = $$[$0]
+case 10:this.$ = yy.bool_compare($$[$0-2], $$[$0-1], $$[$0])
 break;
-case 8:this.$ = $$[$0]
+case 11:this.$ = $$[$0]
 break;
-case 9:this.$ = $$[$0]
+case 12:this.$ = $$[$0]
 break;
-case 10:this.$ = yy.number_literal($$[$0])
+case 13:this.$ = $$[$0]
+break;
+case 14:this.$ = $$[$0]
+break;
+case 15:this.$ = yy.number_literal($$[$0])
 break;
 }
 },
-table: [{3:1,4:2,6:3,8:4,9:5,10:[1,6],11:[1,7],14:[1,8]},{1:[3]},{5:[1,9]},{5:[2,2],7:10,12:[1,11],13:[1,12]},{5:[2,4],12:[2,4],13:[2,4]},{7:13,12:[1,11],13:[1,12]},{5:[2,6],12:[2,6],13:[2,6]},{5:[2,7],12:[2,7],13:[2,7]},{5:[2,10],12:[2,10],13:[2,10]},{1:[2,1]},{6:14,8:4,9:5,10:[1,6],11:[1,7],14:[1,8]},{10:[2,8],11:[2,8],14:[2,8]},{10:[2,9],11:[2,9],14:[2,9]},{9:15,14:[1,8]},{5:[2,3]},{5:[2,5],12:[2,5],13:[2,5]}],
-defaultActions: {9:[2,1],14:[2,3]},
+table: [{3:1,4:2,6:3,8:4,9:5,10:[1,6],13:7,14:8,16:9,17:[1,11],18:[1,12],21:[1,10]},{1:[3]},{5:[1,13]},{7:[1,14]},{7:[2,3]},{7:[2,4]},{11:[1,15]},{7:[2,6],15:16,19:[1,17],20:[1,18]},{7:[2,7],15:19,19:[1,17],20:[1,18]},{7:[2,9],19:[2,9],20:[2,9]},{7:[2,15],19:[2,15],20:[2,15]},{7:[2,11],19:[2,11],20:[2,11]},{7:[2,12],19:[2,12],20:[2,12]},{1:[2,1]},{6:20,8:4,9:5,10:[1,6],13:7,14:8,16:9,17:[1,11],18:[1,12],21:[1,10]},{12:[1,21]},{13:22,14:23,16:9,17:[1,11],18:[1,12],21:[1,10]},{17:[2,13],18:[2,13],21:[2,13]},{17:[2,14],18:[2,14],21:[2,14]},{14:24,21:[1,10]},{7:[1,25]},{9:26,13:7,14:8,16:9,17:[1,11],18:[1,12],21:[1,10]},{7:[2,8]},{15:19,19:[1,17],20:[1,18]},{7:[2,10],19:[2,10],20:[2,10]},{5:[2,2]},{7:[2,5]}],
+defaultActions: {4:[2,3],5:[2,4],13:[2,1],22:[2,8],25:[2,2],26:[2,5]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -569,26 +573,34 @@ performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
-case 0:/* skip whitespace */
+case 0:return 7
 break;
-case 1:return 14
+case 1:/* skip whitespace except \n */
 break;
-case 2:return '+'
+case 2:return 21
 break;
-case 3:return 10
+case 3:return '+'
 break;
-case 4:return 11
+case 4:return 17
 break;
-case 5:return 12
+case 5:return 18
 break;
-case 6:return 13
+case 6:return 19
 break;
-case 7:return 5
+case 7:return 20
+break;
+case 8:return 10
+break;
+case 9:return 11
+break;
+case 10:return 12 // todo : switch assignment operator
+break;
+case 11:return 5
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:[0-9]+)/,/^(?:\+)/,/^(?:aye\b)/,/^(?:nay\b)/,/^(?:in't\b)/,/^(?:is\b)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7],"inclusive":true}}
+rules: [/^(?:[\n\r])/,/^(?:[^\n\S]+)/,/^(?:[0-9]+)/,/^(?:\+)/,/^(?:aye\b)/,/^(?:nay\b)/,/^(?:in't\b)/,/^(?:is\b)/,/^(?:eyup\b)/,/^(?:[A-Za-z][A-Za-z_0-9-]*)/,/^(?:=)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11],"inclusive":true}}
 };
 return lexer;
 })();

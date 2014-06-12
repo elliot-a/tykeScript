@@ -1,9 +1,9 @@
 var TykeBuild = function(){
-	this.tree = {};
+	this.tree = [];
 };
 
 TykeBuild.prototype.add = function(tree){
-	this.tree = tree;
+	//this.tree = tree;
 };
 
 TykeBuild.prototype.getTree = function(){
@@ -27,5 +27,14 @@ TykeBuild.prototype.bool_literal = function(symbol){
 TykeBuild.prototype.number_literal = function(symbol){
 	return {type:'number', symbol:symbol};
 };
+
+TykeBuild.prototype.assignment = function(label, expr){
+	return {type:'assignment', label:label, expr:expr};
+};
+
+TykeBuild.prototype.add_statement = function(statement){
+	this.tree.push( {type:'statement', statement:statement});
+};
+
 
 module.exports = TykeBuild;

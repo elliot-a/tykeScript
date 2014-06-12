@@ -23,6 +23,10 @@ TykeTranslate.prototype._parseExpr = function(expr){
 			output.right = this._parseExpr(expr.right);
 			output.comparison = expr.comparison === 'is' ? '===' : '!==';
 			break;
+		case 'assignment':
+			output.label = expr.label;
+			output.expr = this._parseExpr(expr.expr);
+			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);
 			break;
