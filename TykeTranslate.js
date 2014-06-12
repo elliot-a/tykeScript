@@ -5,7 +5,9 @@ const TykeTranslate = function(tree){
 };
 
 TykeTranslate.prototype.translate = function() {
-	return this._parseExpr(this.tree);
+	return this.tree.map(function(statement){ 
+		return this._parseExpr(statement);
+	}.bind(this));
 };
 
 TykeTranslate.prototype._parseExpr = function(expr){
@@ -26,6 +28,9 @@ TykeTranslate.prototype._parseExpr = function(expr){
 		case 'assignment':
 			output.label = expr.label;
 			output.expr = this._parseExpr(expr.expr);
+			break;
+		case 'statement':
+			output.statement = this._parseExpr(expr.statement);
 			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);

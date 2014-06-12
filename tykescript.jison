@@ -27,11 +27,18 @@ document
     ;
 
 SOURCE
-    : STATEMENT (NEWLINE STATEMENT)* NEWLINE?
+    : STATEMENTS
+    | STATEMENTS NEWLINE
+    ;
+
+STATEMENTS
+    : STATEMENT { yy.add_statement($1)}
+    | STATEMENTS NEWLINE STATEMENT {yy.add_statement($3)}
     ;
 
 STATEMENT
-    : (ASSIGNMENT|EXPR) { yy.add_statement($1)}
+    : ASSIGNMENT
+    | EXPR 
     ;
 
 

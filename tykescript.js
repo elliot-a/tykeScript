@@ -74,9 +74,9 @@
 var tykescript = (function(){
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"document":3,"SOURCE":4,"EOF":5,"STATEMENT":6,"NEWLINE":7,"ASSIGNMENT":8,"EXPR":9,"VAR":10,"LABEL":11,"EQ":12,"BOOL":13,"NUM":14,"COMPARISON":15,"BOOL_LITERAL":16,"aye":17,"nay":18,"isnt":19,"is":20,"NUMBER":21,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",7:"NEWLINE",10:"VAR",11:"LABEL",12:"EQ",17:"aye",18:"nay",19:"isnt",20:"is",21:"NUMBER"},
-productions_: [0,[3,2],[4,4],[6,1],[6,1],[8,4],[9,1],[9,1],[9,3],[13,1],[13,3],[16,1],[16,1],[15,1],[15,1],[14,1]],
+symbols_: {"error":2,"document":3,"SOURCE":4,"EOF":5,"STATEMENTS":6,"NEWLINE":7,"STATEMENT":8,"ASSIGNMENT":9,"EXPR":10,"VAR":11,"LABEL":12,"EQ":13,"BOOL":14,"NUM":15,"COMPARISON":16,"BOOL_LITERAL":17,"aye":18,"nay":19,"isnt":20,"is":21,"NUMBER":22,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",7:"NEWLINE",11:"VAR",12:"LABEL",13:"EQ",18:"aye",19:"nay",20:"isnt",21:"is",22:"NUMBER"},
+productions_: [0,[3,2],[4,1],[4,2],[6,1],[6,3],[8,1],[8,1],[9,4],[10,1],[10,1],[10,3],[14,1],[14,3],[17,1],[17,1],[16,1],[16,1],[15,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -86,28 +86,30 @@ case 1:return yy
 break;
 case 4: yy.add_statement($$[$0])
 break;
-case 5:this.$ = yy.assignment($$[$0-2], $$[$0])
+case 5:yy.add_statement($$[$0])
 break;
-case 8:this.$ = yy.bool_compare($$[$0-2], $$[$0-1], $$[$0])
+case 8:this.$ = yy.assignment($$[$0-2], $$[$0])
 break;
-case 9:this.$ = yy.bool_literal($$[$0])
+case 11:this.$ = yy.bool_compare($$[$0-2], $$[$0-1], $$[$0])
 break;
-case 10:this.$ = yy.bool_compare($$[$0-2], $$[$0-1], $$[$0])
+case 12:this.$ = yy.bool_literal($$[$0])
 break;
-case 11:this.$ = $$[$0]
-break;
-case 12:this.$ = $$[$0]
-break;
-case 13:this.$ = $$[$0]
+case 13:this.$ = yy.bool_compare($$[$0-2], $$[$0-1], $$[$0])
 break;
 case 14:this.$ = $$[$0]
 break;
-case 15:this.$ = yy.number_literal($$[$0])
+case 15:this.$ = $$[$0]
+break;
+case 16:this.$ = $$[$0]
+break;
+case 17:this.$ = $$[$0]
+break;
+case 18:this.$ = yy.number_literal($$[$0])
 break;
 }
 },
-table: [{3:1,4:2,6:3,8:4,9:5,10:[1,6],13:7,14:8,16:9,17:[1,11],18:[1,12],21:[1,10]},{1:[3]},{5:[1,13]},{7:[1,14]},{7:[2,3]},{7:[2,4]},{11:[1,15]},{7:[2,6],15:16,19:[1,17],20:[1,18]},{7:[2,7],15:19,19:[1,17],20:[1,18]},{7:[2,9],19:[2,9],20:[2,9]},{7:[2,15],19:[2,15],20:[2,15]},{7:[2,11],19:[2,11],20:[2,11]},{7:[2,12],19:[2,12],20:[2,12]},{1:[2,1]},{6:20,8:4,9:5,10:[1,6],13:7,14:8,16:9,17:[1,11],18:[1,12],21:[1,10]},{12:[1,21]},{13:22,14:23,16:9,17:[1,11],18:[1,12],21:[1,10]},{17:[2,13],18:[2,13],21:[2,13]},{17:[2,14],18:[2,14],21:[2,14]},{14:24,21:[1,10]},{7:[1,25]},{9:26,13:7,14:8,16:9,17:[1,11],18:[1,12],21:[1,10]},{7:[2,8]},{15:19,19:[1,17],20:[1,18]},{7:[2,10],19:[2,10],20:[2,10]},{5:[2,2]},{7:[2,5]}],
-defaultActions: {4:[2,3],5:[2,4],13:[2,1],22:[2,8],25:[2,2],26:[2,5]},
+table: [{3:1,4:2,6:3,8:4,9:5,10:6,11:[1,7],14:8,15:9,17:10,18:[1,12],19:[1,13],22:[1,11]},{1:[3]},{5:[1,14]},{5:[2,2],7:[1,15]},{5:[2,4],7:[2,4]},{5:[2,6],7:[2,6]},{5:[2,7],7:[2,7]},{12:[1,16]},{5:[2,9],7:[2,9],16:17,20:[1,18],21:[1,19]},{5:[2,10],7:[2,10],16:20,20:[1,18],21:[1,19]},{5:[2,12],7:[2,12],20:[2,12],21:[2,12]},{5:[2,18],7:[2,18],20:[2,18],21:[2,18]},{5:[2,14],7:[2,14],20:[2,14],21:[2,14]},{5:[2,15],7:[2,15],20:[2,15],21:[2,15]},{1:[2,1]},{5:[2,3],8:21,9:5,10:6,11:[1,7],14:8,15:9,17:10,18:[1,12],19:[1,13],22:[1,11]},{13:[1,22]},{14:23,15:24,17:10,18:[1,12],19:[1,13],22:[1,11]},{18:[2,16],19:[2,16],22:[2,16]},{18:[2,17],19:[2,17],22:[2,17]},{15:25,22:[1,11]},{5:[2,5],7:[2,5]},{10:26,14:8,15:9,17:10,18:[1,12],19:[1,13],22:[1,11]},{5:[2,11],7:[2,11]},{16:20,20:[1,18],21:[1,19]},{5:[2,13],7:[2,13],20:[2,13],21:[2,13]},{5:[2,8],7:[2,8]}],
+defaultActions: {14:[2,1]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -577,23 +579,23 @@ case 0:return 7
 break;
 case 1:/* skip whitespace except \n */
 break;
-case 2:return 21
+case 2:return 22
 break;
 case 3:return '+'
 break;
-case 4:return 17
+case 4:return 18
 break;
-case 5:return 18
+case 5:return 19
 break;
-case 6:return 19
+case 6:return 20
 break;
-case 7:return 20
+case 7:return 21
 break;
-case 8:return 10
+case 8:return 11
 break;
-case 9:return 11
+case 9:return 12
 break;
-case 10:return 12 // todo : switch assignment operator
+case 10:return 13 // todo : switch assignment operator
 break;
 case 11:return 5
 break;

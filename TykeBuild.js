@@ -2,9 +2,6 @@ var TykeBuild = function(){
 	this.tree = [];
 };
 
-TykeBuild.prototype.add = function(tree){
-	//this.tree = tree;
-};
 
 TykeBuild.prototype.getTree = function(){
 	return this.tree;

@@ -21,16 +21,8 @@ try{
 }
 
 var tree = parsed.getTree();
-
-console.log(tree);
-
-process.exit();
 var translator = new TykeTranslate(tree);
-
 var jsTree = translator.translate();
-
 var generator = new TykeGenerate(jsTree);
 
 console.log(generator.generate());
-
-//console.log(parser.parser.yy);
