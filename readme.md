@@ -15,6 +15,9 @@ mi'sen  : this
 
 blether: print line
 
+ta-ra 		: returns
+ta-ra wi' 	: return with value
+
 now then : declare a function
 
 ey up : declare a variable
