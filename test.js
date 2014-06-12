@@ -4,3 +4,6 @@ myVar2 !== myVar;
 function ben() { var myVar4 = false; };
 ben();
 function func(x, y) { x === y; };
+var myName = "Ben";
+alert(myName);
+alert("yo!");

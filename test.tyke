@@ -11,3 +11,10 @@ nowthen func
 	wi x y
 	x is y
 	tara
+
+eyup myName = "Ben"
+
+do alert wi myName
+do alert wi "yo!"
+
+do log on t'console wi 'yo'

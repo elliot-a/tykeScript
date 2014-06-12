@@ -18,6 +18,7 @@
 "do"                            return 'do'
 "wi"                            return 'wi'
 [A-Za-z][A-Za-z_0-9-]*          return 'NAME'
+('"'.*'"')|("'"."'")            return 'STR'
 <<EOF>>                         return 'EOF'
 
 /lex
@@ -61,11 +62,16 @@ FUNCTION
     ;
 
 FUNC_CALL
-    : do LABEL {$$ = yy.function_call($2)};
+    : do LABEL {$$ = yy.function_call($2)}
+    | do LABEL wi ARGS
+        {$$ = yy.function_call($2, $4)}
+    ;
 
 EXPR
     : BOOL
     | NUM
+    | STRING
+    | LABEL
     | BOOL COMPARISON BOOL
         {$$ = yy.bool_compare($1, $2, $3)}
     | LABEL COMPARISON LABEL
@@ -100,11 +106,18 @@ NEWLINES
     | NEWLINES NEWLINE
     ;
 
+ARGS
+    : EXPR {$$ = yy.args($1)}
+    | ARGS EXPR {$$ = yy.add_args($1, $2)}
+    ;
+
+
 LABELS
     : LABEL {$$ = yy.labels($1)}
     | LABELS LABEL {yy.add_label($1, $2)}
     ;
 
+STRING : STR {$$ = yy.string_literal($1)};
 NUM : NUMBER {$$ = yy.number_literal($1)};
 LABEL : NAME {$$ = yy.label($1)};
 

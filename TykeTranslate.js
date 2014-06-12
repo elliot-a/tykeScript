@@ -19,7 +19,13 @@ TykeTranslate.prototype._parseExpr = function(expr){
 			break;
 		case 'number':
 		case 'label':
+		case 'string':
 			output.symbol = expr.symbol;
+			break;
+		case 'arg_list':
+			output.args = expr.args.map(function(arg){
+				return this._parseExpr(arg);
+			}.bind(this));
 			break;
 		case 'label_list':
 			output.labels = expr.labels.map(function(label){
@@ -45,6 +51,7 @@ TykeTranslate.prototype._parseExpr = function(expr){
 			break;
 		case 'function_call':
 			output.label = this._parseExpr(expr.label);
+			output.args = this._parseExpr(expr.args);
 			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);

@@ -18,7 +18,16 @@ TykeGenerate.prototype._parseExpr = function(expr){
 		case 'bool':
 		case 'number':
 		case 'label':
+		case 'string':
 			output.push(expr.symbol);
+			break;
+		case 'arg_list':
+			{
+				let list = expr.args.map(function(arg){
+					return this._parseExpr(arg);
+				}.bind(this)).join(', ');
+				output.push(list);
+			}
 			break;
 		case 'label_list':
 			{
@@ -60,7 +69,11 @@ TykeGenerate.prototype._parseExpr = function(expr){
 			output.push('}')
 			break;
 		case 'function_call':
-			output.push(this._parseExpr(expr.label) + '()');
+			{
+				let name = this._parseExpr(expr.label);
+				let args = '(' + this._parseExpr(expr.args) + ')';
+				output.push(name + args);
+			}
 			break;
 		default:
 			throw new Error('Unknown Type : ' + expr.type);
