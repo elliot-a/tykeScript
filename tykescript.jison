@@ -17,8 +17,10 @@
 "tara"                          return 'tara'
 "do"                            return 'do'
 "wi"                            return 'wi'
+"on"                            return 'on'
+"t'"                            return 't'
 [A-Za-z][A-Za-z_0-9-]*          return 'NAME'
-('"'.*'"')|("'"."'")            return 'STR'
+('"'.*'"')|("'".*"'")            return 'STR'
 <<EOF>>                         return 'EOF'
 
 /lex
@@ -62,8 +64,8 @@ FUNCTION
     ;
 
 FUNC_CALL
-    : do LABEL {$$ = yy.function_call($2)}
-    | do LABEL wi ARGS
+    : do NAMESPACE {$$ = yy.function_call($2)}
+    | do NAMESPACE wi ARGS
         {$$ = yy.function_call($2, $4)}
     ;
 
@@ -111,6 +113,10 @@ ARGS
     | ARGS EXPR {$$ = yy.add_args($1, $2)}
     ;
 
+NAMESPACE
+    : LABEL
+    | LABEL on t LABEL
+    ;
 
 LABELS
     : LABEL {$$ = yy.labels($1)}

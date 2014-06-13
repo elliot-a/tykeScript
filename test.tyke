@@ -3,6 +3,7 @@ eyup myVar2 = aye
 myVar2 in't myVar
 nowthen ben
 	eyup myVar4 = nay
+	do alert wi myVar4
 	tara
 
 do ben

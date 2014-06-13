@@ -39,7 +39,7 @@ TykeGenerate.prototype._parseExpr = function(expr){
 			break;
 		case 'bool_compare':
 			output.push(this._parseExpr(expr.left));
-			output.push(expr.comparison);
+			output.push(expr.comparison === 'is' ? '===' : '!==');
 			output.push(this._parseExpr(expr.right));
 			break;
 		case 'assignment':
@@ -58,15 +58,15 @@ TykeGenerate.prototype._parseExpr = function(expr){
 				let parens = '(' + this._parseExpr(expr.arguments) + ')';
 				output.push(name + parens);
 			}
-			output.push('{')
+			output.push('{\n\t');
 			
 			{
 				let statements = expr.statements.map(function(statement){
 						return this._parseExpr(statement)
 				}.bind(this));
-				output.push(statements.join(';\n') + ';');
+				output.push(statements.join(';\n\t') + ';');
 			}
-			output.push('}')
+			output.push('\n}');
 			break;
 		case 'function_call':
 			{
