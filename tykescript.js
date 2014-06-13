@@ -615,7 +615,7 @@ case 7:return 32
 break;
 case 8:return 13
 break;
-case 9:return 15 // todo : switch assignment operator
+case 9:return 15
 break;
 case 10:return 16
 break;
@@ -637,7 +637,7 @@ case 18:return 5
 break;
 }
 },
-rules: [/^(?:[\n\r])/,/^(?:[^\n\S]+)/,/^(?:[0-9]+)/,/^(?:\+)/,/^(?:aye\b)/,/^(?:nay\b)/,/^(?:in't\b)/,/^(?:is\b)/,/^(?:eyup\b)/,/^(?:=)/,/^(?:nowthen\b)/,/^(?:tara\b)/,/^(?:do\b)/,/^(?:wi\b)/,/^(?:on\b)/,/^(?:t')/,/^(?:[A-Za-z][A-Za-z_0-9-]*)/,/^(?:(".*")|('.*'))/,/^(?:$)/],
+rules: [/^(?:[\n\r])/,/^(?:[^\n\S]+)/,/^(?:[0-9]+)/,/^(?:\+)/,/^(?:aye\b)/,/^(?:nay\b)/,/^(?:in't\b)/,/^(?:is\b)/,/^(?:eyup\b)/,/^(?:wa\b)/,/^(?:nowthen\b)/,/^(?:tara\b)/,/^(?:do\b)/,/^(?:wi\b)/,/^(?:on\b)/,/^(?:t')/,/^(?:[A-Za-z][A-Za-z_0-9-]*)/,/^(?:(".*")|('.*'))/,/^(?:$)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"inclusive":true}}
 };
 return lexer;

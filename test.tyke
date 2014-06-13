@@ -1,8 +1,8 @@
-eyup myVar = 1
-eyup myVar2 = aye
+eyup myVar wa 1
+eyup myVar2 wa aye
 myVar2 in't myVar
 nowthen ben
-	eyup myVar4 = nay
+	eyup myVar4 wa nay
 	do alert wi myVar4
 	tara
 
@@ -13,7 +13,7 @@ nowthen func
 	x is y
 	tara
 
-eyup myName = "Ben"
+eyup myName wa "Ben"
 
 do alert wi myName
 do alert wi "yo!"
