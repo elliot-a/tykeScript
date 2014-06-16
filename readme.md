@@ -24,6 +24,13 @@ ey up : declare a variable
 
 muck or nettles : try/catch
 
+gis'un		: increment a number by 1
+
+ger'ova		: array shift
+
+ger'inther 	: array push
+
+ger'onwiyer	: array pop
 
 Hello, World!
 ---------
