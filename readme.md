@@ -32,6 +32,8 @@ ger'inther 	: array push
 
 ger'onwiyer	: array pop
 
+Eeh by gum 	: Error
+
 Hello, World!
 ---------
 
@@ -67,3 +69,14 @@ myBool is
 Iteration over arrays
 -------
 gan 'til gibbed myArray
+
+
+
+try / catch
+-------
+
+muck 
+	myBool 
+nettles
+	Eeh by gum 
+
